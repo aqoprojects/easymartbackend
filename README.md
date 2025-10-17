@@ -27,12 +27,12 @@ The system also features a referral program, allowing users to earn rewards for 
   3. Now, on the same row as MYSQL click the Admin button (it opens your web broswe and takes you to an admin page to create and manage databases).
   4. create a new database
   5. in EasyMart, goto easymart/settings.py scroll down and change db settings:
-    - NAME: your created db name
-    - USER: root (if you are running local on your pc)
-    - PASSWORD: '' (empty strings)
-    - HOST: '127.0.0.1' (default)
-    - PORT: 3306 (default)
-    - Configure EMAIL settings, Background task & Mesage broker, Redis cache
+  - NAME: your created db name
+  - USER: root (if you are running local on your pc)
+  - PASSWORD: '' (empty strings)
+  - HOST: '127.0.0.1' (default)
+  - PORT: 3306 (default)
+  - Configure EMAIL settings, Background task & Mesage broker, Redis cache
   6. in EasyMart terminal run this CMD `python manage.py makemigrations` && `python manage.py migrate`
 
 
@@ -48,18 +48,19 @@ The system also features a referral program, allowing users to earn rewards for 
   - Customer Registrations, Customer Verification, Customer Login, Oauth, 2FA
 2. Preference
   - Customer preference 
-- New Feature to be added in next commit 
+
+### New Feature to be added in next commit 
 
 ## Technologies & Requirements
 
 | Technologies | Description |
 |--------------|-------------|
-| Python       | Programming Language |
-| Django       | Robust Backend Framework |
-| DRF          | Robust REST API Framwork |
-| JWT          | Authentication |
-| Celery & RabbitMQ | Background Task & Message Broker |
-| Redis        | Efficient Data Caching |
-| CloudFlare   | Storage |    
+| Python       | |
+| Django       | |
+| DRF          | |
+| JWT          | |
+| Celery & RabbitMQ | |
+| Redis        | |
+| CloudFlare   | |    
 
 - As project continues more technologies will be added
