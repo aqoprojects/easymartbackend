@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import AnalyticsEvents, ProductRankingMetrics, ProductRankings, SearchHistory
 
-# Register your models here.
+admin.site.register([AnalyticsEvents, ProductRankingMetrics, ProductRankings, SearchHistory])
+
+

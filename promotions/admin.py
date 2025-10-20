@@ -1,3 +1,4 @@
 from django.contrib import admin
+from .models import Promotions, DynamicPricingRules, ProductPromotions
 
-# Register your models here.
+admin.site.register([Promotions, DynamicPricingRules, ProductPromotions])

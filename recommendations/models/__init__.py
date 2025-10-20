@@ -1,0 +1,1 @@
+from .RecommendationsModel import Recommendations

@@ -3,9 +3,9 @@ import uuid
 from django.utils.text import slugify
 from django.contrib.auth import get_user_model
 from django.conf import settings
-from customer.models.DateModel import DateModel
+from accounts.models.DateModel import DateModel
                     
-class ShippingMethods(models.Model, DateModel):
+class ShippingMethods(DateModel):
   shipping_method_id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True, editable=False)
   name = models.CharField(max_length=30)
   description = models.TextField(max_length=500)

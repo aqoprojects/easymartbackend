@@ -3,11 +3,11 @@ import uuid
 from django.utils.text import slugify
 from django.contrib.auth import get_user_model
 from django.conf import settings
-from customer.models.DateModel import DateModel
-from customer.models.OrdersModel import Orders
-from customer.models.ProductModel import Product     
+from accounts.models.DateModel import DateModel
+from orders.models.OrdersModel import Orders
+from products.models.ProductModel import Product     
 
-class OrderItems(models.Model, DateModel):
+class OrderItems(DateModel):
   order_item_id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True, editable=False)
   order_id = models.ForeignKey(Orders, on_delete=models.CASCADE, related_name="%(app_label)s_%(class)s_order_id")
   product_id = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="%(app_label)s_%(class)s_product_id")

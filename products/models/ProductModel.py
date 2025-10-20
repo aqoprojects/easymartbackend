@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 from products.models.CategoryModel import Category
 from accounts.models.DateModel import DateModel
+from django.utils.text import slugify
                     
 class Product(DateModel):
   product_id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True, editable=False)
@@ -16,6 +17,7 @@ class Product(DateModel):
   discount_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0)
   stock_quantity = models.IntegerField(null=True, blank=True)
   is_active = models.BooleanField(default=True)
+  product_slug = models.SlugField(max_length=500, unique=True)
 
 
 
