@@ -10,9 +10,11 @@ from products.models.ProductModel import Product
 class ProductRankings(DateModel):
   product_rankings_id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True, editable=False)
   product_id = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="%(app_label)s_%(class)s_product_id")
-  ranking_type = models.CharField(max_length=20 , choices=[("ranking_type", "best_selling trending top_selling")])
+  RANKING = models.TextChoices("ranking_type", "best_selling trending top_selling")
+  ranking_type = models.CharField(max_length=20 , choices=RANKING.choices)
   score = models.DecimalField(max_digits=10, decimal_places=2)
-  time_period = models.CharField(max_length=20, choices=[("time_period", "daily weekly monthly all_time")])
+  time_period_type = models.TextChoices("time_period", "daily weekly monthly all_time")
+  time_period = models.CharField(max_length=20, choices=time_period_type.choices)
   rank = models.IntegerField()
 
   def str(self):

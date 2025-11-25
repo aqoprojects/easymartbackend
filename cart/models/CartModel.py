@@ -15,4 +15,4 @@ class Cart(DateModel):
 
 
   def str(self):
-    return "This is Cart data"
+    return self.cart_id

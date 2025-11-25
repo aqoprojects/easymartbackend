@@ -1,6 +1,8 @@
 from django.urls import path
 from accounts import views as CustomerViews
 from products import views as ProdcutViews
+from promotions import views as PromotionViews
+from cart import views as CartViews
 from rest_framework_simplejwt.views import (
   TokenObtainPairView,
   TokenRefreshView
@@ -13,5 +15,11 @@ urlpatterns = [
 
   path('categories/', ProdcutViews.ProductCategories.as_view(), name='categories'),
   path('products/', ProdcutViews.Products.as_view(), name='products'),
-  path('product/<slug:product_slug>/', ProdcutViews.Product.as_view(), name="product"),
+  path('product/<slug:product_slug>/', ProdcutViews.ProductAPI.as_view(), name="product"),
+
+  path('promotions/', PromotionViews.Promotion.as_view(), name="promotions"), 
+
+  path('carts/', CartViews.CartApi.as_view(), name="carts"),
+  path('add_cart/', CartViews.CartCreateApi.as_view(), name="cartItems"),
+  path('update_cart/<slug:cart_item_id>/', CartViews.CartUpdateApi.as_view(), name="cartItems")
 ]
