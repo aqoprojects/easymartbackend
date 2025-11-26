@@ -4,7 +4,7 @@ from .models import Cart, CartItems
 from .serializers import CartSerializer, CartItemsSerializer
 from rest_framework.response import Response
 from django.db.models import Sum
-from utils.cart import guest_perform_add_to_cart, guest_create_add_to_cart, get_guest_carts, guest_perform_cart_update, get_cartitems_data_through_cart, get_cartitems_data
+from utils.cart import guest_perform_add_to_cart, guest_create_add_to_cart, get_guest_carts, guest_perform_cart_update, get_cartitems_data_through_cart, get_cartitems_data, guest_perform_cart_delete, guest_destroy_cart_delete
 
 
 class CartApi(generics.ListCreateAPIView):
@@ -74,4 +74,26 @@ class CartUpdateApi(generics.UpdateAPIView):
     response = super().update(request, *args, **kwargs)
     if not request.user.is_authenticated:
       response = get_cartitems_data_through_cart(request, response)
+    return response
+
+class CartDeleteApi(generics.DestroyAPIView):
+  serializer_class = CartItemsSerializer
+  lookup_url_kwarg = 'cart_item_id'
+
+  def get_queryset(self):
+    if not self.request.user.is_authenticated:
+      queryset = get_guest_carts(self)
+    return queryset
+  
+  def perform_destroy(self, instance):
+    if not self.request.user.is_authenticated:
+      guest_perform_cart_delete(instance)
+      print("Yoo1")
+
+  def destroy(self, request, *args, **kwargs):
+    instance = self.get_object()  # gets the CartItem
+    self.perform_destroy(instance)
+    print("YOO2")
+    response = guest_destroy_cart_delete(instance)
+    print("YOO5")
     return response

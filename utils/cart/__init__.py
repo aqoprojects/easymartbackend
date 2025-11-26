@@ -1,2 +1,2 @@
-from .guest_cart import guest_perform_add_to_cart, guest_create_add_to_cart, get_guest_carts, guest_perform_cart_update 
+from .guest_cart import guest_perform_add_to_cart, guest_create_add_to_cart, get_guest_carts, guest_perform_cart_update, guest_perform_cart_delete, guest_destroy_cart_delete
 from .cartitems_data import get_cartitems_data_through_cart, get_cartitems_data
