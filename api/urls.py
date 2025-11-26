@@ -21,5 +21,6 @@ urlpatterns = [
 
   path('carts/', CartViews.CartApi.as_view(), name="carts"),
   path('add_cart/', CartViews.CartCreateApi.as_view(), name="cartItems"),
-  path('update_cart/<slug:cart_item_id>/', CartViews.CartUpdateApi.as_view(), name="cartItems")
+  path('update_cart/<slug:cart_item_id>/', CartViews.CartUpdateApi.as_view(), name="update_cartItems"),
+  path('delete_cart/<slug:cart_item_id>/', CartViews.CartDeleteApi.as_view(), name="delete_cartItems")
 ]

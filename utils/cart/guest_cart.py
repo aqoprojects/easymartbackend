@@ -1,6 +1,8 @@
 from cart.models import Cart, CartItems
 from .cartitems_data import get_cartitems_data
 from rest_framework.exceptions import ValidationError
+from rest_framework.response import Response
+from rest_framework import status
 import uuid 
 
 def guest_perform_add_to_cart(self, serializer):
@@ -49,3 +51,35 @@ def guest_perform_cart_update(serializer):
     raise ValidationError("Quantity cannot be lesser than one.")
 
   serializer.save()
+
+
+def guest_perform_cart_delete(instance):
+  instance.delete()
+
+def guest_destroy_cart_delete(instance):
+  cart_id = instance.cart_id 
+  is_last_cart_item = cart_id.cart_cartitems_cart_id.count()
+  if is_last_cart_item <= 0:
+    cart_id.delete()
+
+    response = Response(
+    {
+        "cart_cartitems_cart_id": [],   # or whatever you want
+        "order_items": [],
+        "total_items": 0
+    },
+    status=status.HTTP_200_OK
+    )
+
+     
+    response.delete_cookie(
+        'guest_id',
+        # path='/',
+        samesite='Lax'
+    )
+    return response
+  print("YOO3")
+  response = get_cartitems_data(cart_id)
+  print("YOO4")
+  print(response)
+  return response
