@@ -72,3 +72,6 @@ class Customer(AbstractBaseUser):
   def is_staff(self):
     return self.is_admin
 
+  @property
+  def id(self):
+    return self.customer_id

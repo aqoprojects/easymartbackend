@@ -7,9 +7,10 @@ from django.db.models import Sum
 
 @receiver(post_save, sender=CartItems)
 def create_or_update_order(sender, instance, created, **kwargs):
-  cart_itmes = instance.cart_id.cart_cartitems_cart_id.all() 
+  cart_itmes = instance.cart_id.cart_cartitems_cart_id.all()
+  get_customer = instance.cart_id.customer_id 
   
-  order, created = Orders.objects.get_or_create(cart_id=instance.cart_id)
+  order, created = Orders.objects.get_or_create(cart_id=instance.cart_id, customer_id=get_customer if get_customer is not None else None )
   get_orderitem_subtotal = instance.quantity * instance.product_id.price
 
   orderItems, created = OrderItems.objects.get_or_create(order_id=order, product_id=instance.product_id)
@@ -25,8 +26,9 @@ def create_or_update_order(sender, instance, created, **kwargs):
 @receiver(post_delete, sender=CartItems)
 def delete_order(sender, instance, **kwargs):
   # cart_itmes = instance.cart_id.cart_cartitems_cart_id.all() 
-  
-  order = Orders.objects.get(cart_id=instance.cart_id)
+  if not Orders.objects.filter(cart_id=instance.cart_id_id):
+    return
+  order = Orders.objects.get(cart_id=instance.cart_id_id)
   # get_orderitem_subtotal = instance.quantity * instance.product_id.price
 
   orderItems = OrderItems.objects.get(order_id=order, product_id=instance.product_id)
@@ -35,6 +37,7 @@ def delete_order(sender, instance, **kwargs):
   if order.orders_orderitems_order_id.count() <=0:
     order.delete()
     return
+
   get_order_total = order.orders_orderitems_order_id.aggregate(total_quantity=Sum('subtotal'))
   order.total_amount = round(get_order_total['total_quantity'],2)
   order.save()
