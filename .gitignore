@@ -3,3 +3,5 @@ myenv/
 media/
 __pycache__/
 *.pyc
+f.py
+venv/
