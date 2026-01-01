@@ -5,3 +5,5 @@ __pycache__/
 *.pyc
 f.py
 venv/
+easymart-key.pem
+celerybeat-schedule
