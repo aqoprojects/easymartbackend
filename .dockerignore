@@ -6,3 +6,4 @@ venv/
 media/
 easymart-key.pem
 celerybeat-schedule
+s/

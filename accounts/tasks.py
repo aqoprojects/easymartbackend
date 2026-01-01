@@ -8,6 +8,10 @@ from django.utils import timezone
 from datetime import timedelta
 
 @shared_task
+def multiply(a,b):
+  return f"Its Worked {a * b}"
+
+@shared_task
 def sendVerificationMail(customer_email, cutomer_id):
   customer = get_user_model().objects.get(email=customer_email)
   token = get_random_string(length=4, allowed_chars='0123456789')

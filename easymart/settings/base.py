@@ -14,7 +14,6 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 SECRET_KEY = 'django-insecure-ubf&%tk82p@eeq_)%ip%95mfie=tv68$7*l9=5^eo$26ry8y@x'
 
-
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -42,9 +41,6 @@ INSTALLED_APPS = [
     'analytics.apps.AnalyticsConfig',
     'wishlist.apps.WishlistConfig',
     'recommendations.apps.RecommendationsConfig',
-    'django_celery_results',
-    
-
 ]
 
 MIDDLEWARE = [
@@ -134,32 +130,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.Customer'
 
-
-
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'accounts.authentication.CookieJWTAuthentication',
-        # 'rest_framework.renderers.BrowsableAPIRenderer',
-    ),
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.IsAuthenticated',
-    # ],
-}
-
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-    'ROTATE_REFRESH_TOKENS': True,  # Rotate on refresh (best practice)
-    'BLACKLIST_AFTER_ROTATION': True,  # Auto-blacklist old refresh tokens
-    'UPDATE_LAST_LOGIN': False,
-    'ALGORITHM': 'HS256',
-    'SIGNING_KEY': SECRET_KEY,  # Use env var in prod
-    'VERIFYING_KEY': None,
-    'AUTH_HEADER_TYPES': ('Bearer',),  # Not used since we're using cookies
-    'USER_ID_FIELD': 'customer_id',  # Custom PK field
-    'USER_ID_CLAIM': 'user_id',
-    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
-   
-}
 
 
