@@ -23,6 +23,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     'wishlist.apps.WishlistConfig',
     'recommendations.apps.RecommendationsConfig',
     'django_celery_results',
+    
 
 ]
 
@@ -74,6 +76,7 @@ TEMPLATES = [
     },
 ]
 
+ASGI_APPLICATION = "easymart.asgi.application"
 WSGI_APPLICATION = 'easymart.wsgi.application'
 
 
@@ -117,10 +120,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'static'
-MEDIA_URL = 'media/'
-MEDIA_ROOT = BASE_DIR  / 'media'
+
 # MEDIA_ROOT = BASE_DIR / 'media/'
 # STATICFILES_DIRS = [
 #   BASE_DIR / 'static'

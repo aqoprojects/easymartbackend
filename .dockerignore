@@ -1,7 +1,8 @@
-.env
 myenv/
-media/
 __pycache__/
 *.pyc
 f.py
 venv/
+media/
+easymart-key.pem
+celerybeat-schedule
