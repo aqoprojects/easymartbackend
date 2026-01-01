@@ -9,7 +9,7 @@ env = environ.Env(
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 print(BASE_DIR)
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
-ALLOWED_HOSTS = env("ALLOWED_HOSTS")
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 DEBUG=True
 CORS_ALLOWED_ORIGINS = ['http://localhost:5173','http://localhost:4173']
 CORS_ALLOW_CREDENTIALS = True 
