@@ -7,23 +7,6 @@ services:
     env_file: .env
     expose:
       - "8000"
-  
-  celery:
-    build: .
-    command: celery -A easymart worker -l info --concurrency=4
-    env_file: .env
-    restart: unless-stopped
-
-
-  nginx:
-    build: ./nginx
-    ports:
-      - "80:80"
-      - "443:443"
-    depends_on:
-      - web
-    restart: unless-stopped
-
 
 networks:
   default:
