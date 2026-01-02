@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'analytics.apps.AnalyticsConfig',
     'wishlist.apps.WishlistConfig',
     'recommendations.apps.RecommendationsConfig',
+    "storages",
 ]
 
 MIDDLEWARE = [
