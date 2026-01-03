@@ -14,19 +14,26 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = env('DEBUG')
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS')
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
 
-DATABASES = {'default': {
-      'ENGINE': 'django.db.backends.sqlite3',
-      'NAME': '/tmp/db.sqlite3',
-  }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('POSTGRES_DB'),
+        'USER': env('POSTGRES_USER'),
+        'PASSWORD': env('POSTGRES_PASSWORD'),
+        'HOST': env('POSTGRES_HOST'),
+        'PORT': env('POSTGRES_PORT'),
+    }
 }
 
+
 STORAGES = {
-    # "default": {
-    #     "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
-    # },
+     "default": {
+         "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+     },
     "staticfiles": {
         "BACKEND": "utils.store.storages.StaticStorage",
     },
@@ -37,22 +44,26 @@ STATIC_URL='https://easymartaqo.s3.amazonaws.com/static/'
 
 
 MEDIA_URL=env("MEDIA_URL")
-DEFAULT_FILE_STORAGE='storages.backends.s3boto3.S3Boto3Storage'
+AWS_LOCATION = 'media'
 
 AWS_ACCESS_KEY_ID=env("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY=env("AWS_SECRET_ACCESS_KEY")
 AWS_STORAGE_BUCKET_NAME=env("AWS_STORAGE_BUCKET_NAME")
 AWS_S3_REGION_NAME=env("AWS_S3_REGION_NAME")
-AWS_S3_CUSTOM_DOMAIN=f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
-AWS_DEFAULT_ACL=None
 AWS_S3_FILE_OVERWRITE=env("AWS_S3_FILE_OVERWRITE")
-AWS_QUERYSTRING_AUTH=env("AWS_QUERYSTRING_AUTH")
+#AWS_QUERYSTRING_AUTH=env("AWS_QUERYSTRING_AUTH")
+AWS_QUERYSTRING_AUTH = True
+AWS_QUERYSTRING_EXPIRE = 3600
+AWS_S3_SIGNATURE_VERSION = 's3v4'
+AWS_DEFAULT_ACL = None
+AWS_S3_FILE_OVERWRITE = False
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
 
 
-
-CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS')
-CORS_ALLOW_CREDENTIALS = True 
-
+CORS_ALLOWED_ORIGINS  = env.list('CORS_ALLOWED_ORIGINS')
+CORS_ALLOW_CREDENTIALS = True
 EMAIL_BACKEND = env('EMAIL_BACKEND')
 EMAIL_HOST = env('EMAIL_HOST')
 EMAIL_PORT = env('EMAIL_PORT')
@@ -97,3 +108,7 @@ SIMPLE_JWT = {
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
    
 }
+
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SECURE = True

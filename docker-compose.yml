@@ -16,10 +16,10 @@ services:
       - ./certbot/conf:/etc/letsencrypt
     depends_on:
       - nginx
-    entrypoint: sh -c "trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;"
 
   nginx:
     build: ./nginx
+    user: root
     ports:
       - "80:80"
       - "443:443"
