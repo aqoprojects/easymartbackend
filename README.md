@@ -53,14 +53,24 @@ The system also features a referral program, allowing users to earn rewards for 
 
 ## Technologies & Requirements
 
-| Technologies | Description |
-|--------------|-------------|
-| Python       | |
-| Django       | |
-| DRF          | |
-| JWT          | |
-| Celery & RabbitMQ | |
-| Redis        | |
-| CloudFlare   | |    
+| Technologies/Services   | Development         | Production                                | 
+|-------------------------|---------------------|-------------------------------------------
+| Language                | Python              | Python
+| Framework               | Django, DRF         | Django, DRF
+| Authentication          | JWT, Session, OAuth | JWT, Session, OAuth
+| Background Task         | Celery              | Celery
+| Message Broker          | Rabbitmq            | Cloudamqp
+| Cache                   | Redis               | aiven
+| Database                | Postgres            | Postgres (AWS Aurora & RDS)
+| Host                    | Ubuntu              | AWS EC2 (Ubuntu)
+| Container               | Docker              | Docker, Docker compose
+| Application server      | Django Server       | Uvicorn 
+| Real time data          | Websocket Daphne    | Websocket Uvicorn 
+| Web server              | Nginx               | Nginx 
+| Security tool (TLS/SSL) | HTTP                | Certbot
+| Storage                 | Django Storage      | S3 Bucket (signed url)
+| Payemnt                 | Stripe              | Stripe & Webhooks
+| CI/CD                   | git/github          | Git Action
+| Mailing                 | Gmail               | AWS SES
 
 - As project continues more technologies will be added
