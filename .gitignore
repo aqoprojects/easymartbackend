@@ -8,3 +8,4 @@ venv/
 easymart-key.pem
 celerybeat-schedule
 devsettings/
+certbot/
