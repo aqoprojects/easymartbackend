@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from rest_framework.pagination import PageNumberPagination
 from .models import Category, Product, ProductImages
-
+from django.core.files.storage import default_storage
 
 class ProductImagesSerializer(ModelSerializer):
   class Meta:
@@ -21,7 +21,7 @@ class ProductsSerializer(ModelSerializer):
     productImage = obj.products_productimages_product_id.get(is_primary=True)
     if productImage:
       request = self.context.get('request')
-      return request.build_absolute_uri(productImage.image_url.url) if request else 'http://localhost:8000'+productImage.image_url.url
+      return default_storage.url(productImage.image_url.name)
     return None
   
 

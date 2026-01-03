@@ -14,25 +14,56 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = env('DEBUG')
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS')
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
 
-DATABASES = {'default': {
-      'ENGINE': 'django.db.backends.sqlite3',
-      'NAME': '/tmp/db.sqlite3',
-  }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('POSTGRES_DB'),
+        'USER': env('POSTGRES_USER'),
+        'PASSWORD': env('POSTGRES_PASSWORD'),
+        'HOST': env('POSTGRES_HOST'),
+        'PORT': env('POSTGRES_PORT'),
+    }
 }
 
 
-STATIC_URL = '/static/'
-STATIC_ROOT = '/var/www/static'
+STORAGES = {
+     "default": {
+         "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+     },
+    "staticfiles": {
+        "BACKEND": "utils.store.storages.StaticStorage",
+    },
+}
+STATIC_URL='https://easymartaqo.s3.amazonaws.com/static/'
+# STATICFILES_STORAGE='storages.backends.s3boto3.S3Boto3Storage'
+# STATIC_ROOT = '/var/www/static'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = '/var/www/media'
 
-CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS')
-CORS_ALLOW_CREDENTIALS = True 
+MEDIA_URL=env("MEDIA_URL")
+AWS_LOCATION = 'media'
 
+AWS_ACCESS_KEY_ID=env("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY=env("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME=env("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_REGION_NAME=env("AWS_S3_REGION_NAME")
+AWS_S3_FILE_OVERWRITE=env("AWS_S3_FILE_OVERWRITE")
+#AWS_QUERYSTRING_AUTH=env("AWS_QUERYSTRING_AUTH")
+AWS_QUERYSTRING_AUTH = True
+AWS_QUERYSTRING_EXPIRE = 3600
+AWS_S3_SIGNATURE_VERSION = 's3v4'
+AWS_DEFAULT_ACL = None
+AWS_S3_FILE_OVERWRITE = False
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+
+
+CORS_ALLOWED_ORIGINS  = env.list('CORS_ALLOWED_ORIGINS')
+CORS_ALLOW_CREDENTIALS = True
 EMAIL_BACKEND = env('EMAIL_BACKEND')
 EMAIL_HOST = env('EMAIL_HOST')
 EMAIL_PORT = env('EMAIL_PORT')
@@ -57,25 +88,27 @@ WEBHOOK_SECRET = env("WEBHOOK_SECRET")
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'accounts.authentication.CookieJWTAuthentication',
-        # 'rest_framework.renderers.BrowsableAPIRenderer',
+       
     ),
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.IsAuthenticated',
-    # ],
+
 }
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-    'ROTATE_REFRESH_TOKENS': True,  # Rotate on refresh (best practice)
-    'BLACKLIST_AFTER_ROTATION': True,  # Auto-blacklist old refresh tokens
+    'ROTATE_REFRESH_TOKENS': True, 
+    'BLACKLIST_AFTER_ROTATION': True, 
     'UPDATE_LAST_LOGIN': False,
     'ALGORITHM': 'HS256',
-    'SIGNING_KEY': env("SECRET_KEY"),  # Use env var in prod
+    'SIGNING_KEY': env("SECRET_KEY"),  
     'VERIFYING_KEY': None,
-    'AUTH_HEADER_TYPES': ('Bearer',),  # Not used since we're using cookies
-    'USER_ID_FIELD': 'customer_id',  # Custom PK field
+    'AUTH_HEADER_TYPES': ('Bearer',),  
+    'USER_ID_FIELD': 'customer_id', 
     'USER_ID_CLAIM': 'user_id',
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
    
 }
+
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SECURE = True
