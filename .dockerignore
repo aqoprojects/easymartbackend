@@ -1,3 +1,4 @@
+certbot/
 myenv/
 __pycache__/
 *.pyc
@@ -7,3 +8,5 @@ media/
 easymart-key.pem
 celerybeat-schedule
 s/
+devsettings/
+staticfiles/
