@@ -12,3 +12,4 @@ certbot/
 certbot/live/
 certbot/archive/
 certbot/keys/
+staticfiles/
